@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa de Mercado - EcoSmart Garden</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .form-content {
+            padding: 40px 30px;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+            padding: 25px;
+            border-left: 4px solid #2ecc71;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .section h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2ecc71;
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.1);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            border: 1px solid #e0e6ed;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-item:hover {
+            background: #f1f8e9;
+            border-color: #2ecc71;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+            accent-color: #2ecc71;
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .radio-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background: white;
+            border: 2px solid #e0e6ed;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .radio-item:hover {
+            border-color: #2ecc71;
+            background: #f1f8e9;
+        }
+        
+        .radio-item input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #2ecc71;
+        }
+        
+        .radio-item input[type="radio"]:checked + span {
+            color: #2ecc71;
+            font-weight: 600;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 40px auto 0;
+            min-width: 200px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.3);
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+
+        .range-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 8px;
+            background: #e0e6ed;
+            border-radius: 5px;
+            outline: none;
+            accent-color: #2ecc71;
+        }
+
+        .range-value {
+            min-width: 80px;
+            padding: 8px 12px;
+            background: #2ecc71;
+            color: white;
+            border-radius: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌱 EcoSmart Garden</h1>
+            <p>Pesquisa de Mercado - Jardinagem Inteligente Urbana</p>
+        </div>
+        
+        <div class="form-content">
+            <form id="marketResearchForm">
+                <!-- Seção 1: Informações Pessoais -->
+                <div class="section">
+                    <h3>📊 Perfil Demográfico</h3>
+                    
+                    <div class="form-group">
+                        <label for="name">Nome Completo <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">E-mail <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="age">Idade <span class="required">*</span></label>
+                        <select id="age" name="age" required>
+                            <option value="">Selecione sua faixa etária</option>
+                            <option value="18-24">18-24 anos</option>
+                            <option value="25-34">25-34 anos</option>
+                            <option value="35-44">35-44 anos</option>
+                            <option value="45-54">45-54 anos</option>
+                            <option value="55+">55+ anos</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="income">Renda Familiar Mensal</label>
+                        <select id="income" name="income">
+                            <option value="">Selecione</option>
+                            <option value="até 3000">Até R$ 3.000</option>
+                            <option value="3001-6000">R$ 3.001 - R$ 6.000</option>
+                            <option value="6001-10000">R$ 6.001 - R$ 10.000</option>
+                            <option value="10001-15000">R$ 10.001 - R$ 15.000</option>
+                            <option value="15001+">Acima de R$ 15.000</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="city">Cidade onde reside</label>
+                        <input type="text" id="city" name="city" placeholder="Ex: São Paulo, SP">
+                    </div>
+                </div>
+
+                <!-- Seção 2: Hábitos de Jardinagem -->
+                <div class="section">
+                    <h3>🌿 Experiência com Jardinagem</h3>
+                    
+                    <div class="form-group">
+                        <label>Você possui experiência com jardinagem? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="gardening_experience" value="nenhuma" required>
+                                <span>Nenhuma</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="gardening_experience" value="basica" required>
+                                <span>Básica</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="gardening_experience" value="intermediaria" required>
+                                <span>Intermediária</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="gardening_experience" value="avancada" required>
+                                <span>Avançada</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Que tipo de espaço você tem disponível para jardinagem?</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="space[]" value="apartamento_sem_varanda">
+                                <span>Apartamento sem varanda</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="space[]" value="apartamento_com_varanda">
+                                <span>Apartamento com varanda</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="space[]" value="casa_quintal_pequeno">
+                                <span>Casa com quintal pequeno</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="space[]" value="casa_quintal_grande">
+                                <span>Casa com quintal grande</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="space[]" value="area_interna">
+                                <span>Apenas área interna</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 3: Interesse no Produto -->
+                <div class="section">
+                    <h3>🤖 Interesse em Tecnologia para Jardinagem</h3>
+                    
+                    <div class="form-group">
+                        <label>Qual seu nível de interesse em um sistema automatizado de jardinagem? <span class="required">*</span></label>
+                        <div class="range-group">
+                            <span>Baixo</span>
+                            <input type="range" id="interest_level" name="interest_level" min="1" max="10" value="5" oninput="updateRangeValue(this.value)">
+                            <span>Alto</span>
+                            <div class="range-value" id="interest_value">5</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Quanto você estaria disposto a investir em um sistema inteligente de jardinagem?</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="price_range" value="até 1000">
+                                <span>Até R$ 1.000</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="price_range" value="1001-2000">
+                                <span>R$ 1.001 - R$ 2.000</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="price_range" value="2001-3000">
+                                <span>R$ 2.001 - R$ 3.000</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="price_range" value="3000+">
+                                <span>Acima de R$ 3.000</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Quais funcionalidades seriam mais importantes para você?</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features[]" value="irrigacao_automatica">
+                                <span>Irrigação automática</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features[]" value="iluminacao_led">
+                                <span>Iluminação LED inteligente</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features[]" value="app_monitoramento">
+                                <span>App para monitoramento</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features[]" value="controle_nutrientes">
+                                <span>Controle de nutrientes</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features[]" value="alertas_smartphone">
+                                <span>Alertas no smartphone</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="features[]" value="design_compacto">
+                                <span>Design compacto</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Seção 4: Hábitos de Consumo -->
+                <div class="section">
+                    <h3>🥬 Hábitos Alimentares e Sustentabilidade</h3>
+                    
+                    <div class="form-group">
+                        <label>Com que frequência você consome alimentos orgânicos?</label>
+                        <select name="organic_frequency">
+                            <option value="">Selecione</option>
+                            <option value="nunca">Nunca</option>
+                            <option value="raramente">Raramente</option>
+                            <option value="ocasionalmente">Ocasionalmente</option>
+                            <option value="frequentemente">Frequentemente</option>
+                            <option value="sempre">Sempre que possível</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Quais plantas você gostaria de cultivar em casa?</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="plants[]" value="hortalicas">
+                                <span>Hortaliças (alface, rúcula)</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="plants[]" value="ervas_aromaticas">
+                                <span>Ervas aromáticas</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="plants[]" value="temperos">
+                                <span>Temperos</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="plants[]" value="plantas_medicinais">
+                                <span>Plantas medicinais</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="plants[]" value="microgreens">
+                                <span>Microgreens</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Qual é a principal motivação para ter uma horta em casa?</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="motivation" value="economia">
+                                <span>Economia</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="motivation" value="saude">
+                                <span>Saúde</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="motivation" value="sustentabilidade">
+                                <span>Sustentabilidade</span>
+                            </label>
+                            <label class="radio-item">
