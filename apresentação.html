@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoSmart Garden - Apresentação Executiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100vh;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .slide-content {
+            max-width: 900px;
+            width: 100%;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .slide h2 {
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .slide h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #f8f9fa;
+        }
+
+        .slide p {
+            font-size: 1.3em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3em;
+            font-weight: 700;
+            color: #2ecc71;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+            z-index: 1000;
+        }
+
+        .bullet-points {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .bullet-points li {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            position: relative;
+        }
+
+        .bullet-points li::before {
+            content: "🌱";
+            position: absolute;
+            left: -30px;
+            font-size: 1.2em;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .slide-title {
+            background: #fff;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .slide-product {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .slide-market {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .slide-financials {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .slide-conclusion {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .logo {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .slide h1 {
+                font-size: 2.5em;
+            }
+            
+            .slide h2 {
+                font-size: 2em;
+            }
+            
+            .slide p {
+                font-size: 1.1em;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Título -->
+        <div class="slide slide-title active">
+            <div class="slide-content">
+                <div class="logo">🌱</div>
+                <h1>EcoSmart Garden</h1>
+                <h3>Sistema Inteligente de Jardinagem Urbana Sustentável</h3>
+                <p style="font-size: 1.5em; margin-top: 40px;">Revolucionando a agricultura urbana com tecnologia IoT e sustentabilidade</p>
+                <p style="opacity: 0.8; margin-top: 30px;">Apresentação Executiva • 2024</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Visão Geral do Produto -->
+        <div class="slide slide-product">
+            <div class="slide-content">
+                <h2>💡 Visão Geral do Produto</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>Automação Inteligente</h3>
+                        <p>Sistema IoT com IA que monitora e ajusta automaticamente irrigação, iluminação e nutrição</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌿</div>
+                        <h3>Sustentabilidade</h3>
+                        <p>90% mais eficiente no uso da água, energia LED de baixo consumo</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>Conectividade</h3>
+                        <p>App móvel para monitoramento remoto e biblioteca de cultivos</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏠</div>
+                        <h3>Design Compacto</h3>
+                        <p>150cm x 80cm x 40cm<br>24 plantas simultâneas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Público-Alvo -->
+        <div class="slide slide-market">
+            <div class="slide-content">
+                <h2>🎯 Público-Alvo</h2>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-number">4,2M</div>
+                        <div class="stat-label">Mercado Potencial<br>Consumidores</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">28-45</div>
+                        <div class="stat-label">Idade Média<br>Anos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">R$ 8K</div>
+                        <div class="stat-label">Renda Média<br>Mensal</div>
+                    </div>
+                </div>
+                
+                <div class="bullet-points">
+                    <h3 style="text-align: center; margin-bottom: 30px;">Segmentos Principais</h3>
+                    <ul style="list-style: none;">
+                        <li><strong>Famílias Jovens Urbanas:</strong> 65% interesse, foco em educação ambiental</li>
+                        <li><strong>Profissionais de Alta Performance:</strong> 78% interesse, buscam praticidade</li>
+                        <li><strong>Entusiastas da Culinária:</strong> 85% interesse, valorizam ingredientes frescos</li>
+                        <li><strong>Aposentados Ativos:</strong> 45% interesse, hobby saudável</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Análise Financeira -->
+        <div class="slide slide-financials">
+            <div class="slide-content">
+                <h2>💰 Projeções Financeiras</h2>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-number">R$ 1,65M</div>
+                        <div class="stat-label">Receita Ano 1</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">40%</div>
+                        <div class="stat-label">Margem de Lucro</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">132%</div>
+                        <div class="stat-label">ROI Ano 1</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">9,1</div>
+                        <div class="stat-label">Payback (meses)</div>
+                    </div>
+                </div>
+                
+                <div class="feature-card" style="margin-top: 40px;">
+                    <h3>📈 Crescimento Projetado (5 anos)</h3>
+                    <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; margin-top: 20px;">
+                        <div><strong>2024:</strong><br>660 unidades</div>
+                        <div><strong>2025:</strong><br>1.450 unidades</div>
+                        <div><strong>2026:</strong><br>2.900 unidades</div>
+                        <div><strong>2027:</strong><br>5.200 unidades</div>
+                        <div><strong>2028:</strong><br>8.500 unidades</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Diferencial Competitivo -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>🚀 Diferencial Competitivo</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h3>Inteligência Artificial</h3>
+                        <p>Algoritmos próprios que aprendem e otimizam o crescimento das plantas</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔧</div>
+                        <h3>Design Modular</h3>
+                        <p>Expansão vertical e horizontal conforme necessidade do espaço</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">♻️</div>
+                        <h3>Sustentabilidade Integral</h3>
+                        <p>Materiais recicláveis e sistema de compostagem integrado</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3>Educação Ambiental</h3>
+                        <p>Plataforma educativa que ensina agricultura sustentável</p>
+                    </div>
+                </div>
+                
+                <div class="bullet-points" style="margin-top: 40px;">
+                    <h3 style="text-align: center; margin-bottom: 20px;">Posicionamento no Mercado</h3>
+                    <ul style="list-style: none;">
+                        <li>Preço competitivo: <span class="highlight">R$ 2.500</span> vs concorrentes R$ 1.800-3.200</li>
+                        <li>Tecnologia mais avançada que 80% dos concorrentes</li>
+                        <li>Único com sistema de compostagem integrado</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Estratégia de Mercado -->
+        <div class="slide slide-market">
+            <div class="slide-content">
+                <h2>📊 Estratégia de Mercado</h2>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Segmentação</h3>
+                        <p>Foco inicial em grandes centros urbanos: SP, RJ, BH, Brasília</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💡</div>
+                        <h3>Modelo de Negócio</h3>
+                        <p>Venda direta + assinatura mensal de sementes e nutrientes</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📢</div>
+                        <h3>Marketing</h3>
+                        <p>Digital first: redes sociais, influenciadores, eventos sustentáveis</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤝</div>
+                        <h3>Parcerias</h3>
+                        <p>Lojas de jardinagem, escolas, empresas com programas sustentáveis</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card" style="margin-top: 40px;">
+                    <h3>Meta de Penetração</h3>
+                    <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+                        <div><strong>Ano 1:</strong> 0,016% do mercado</div>
+                        <div><strong>Ano 3:</strong> 0,069% do mercado</div>
+                        <div><strong>Ano 5:</strong> 0,203% do mercado</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Roadmap de Desenvolvimento -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>🗓️ Roadmap de Desenvolvimento</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin: 40px 0;">
+                    <div class="feature-card">
+                        <h3>Q1 2024</h3>
+                        <ul style="list-style: none; text-align: left;">
+                            <li>✅ Prototipação</li>
+                            <li>✅ Testes de conceito</li>
+                            <li>✅ Pesquisa de mercado</li>
+                            <li>🔄 Desenvolvimento app</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Q2 2024</h3>
+                        <ul style="list-style: none; text-align: left;">
+                            <li>🔄 Testes piloto</li>
+                            <li>🔄 Certificações</li>
+                            <li>📋 Setup produção</li>
+                            <li>📋 Estratégia marketing</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Q3 2024</h3>
+                        <ul style="list-style: none; text-align: left;">
+                            <li>📋 Lançamento beta</li>
+                            <li>📋 Primeiras vendas</li>
+                            <li>📋 Feedback usuários</li>
+                            <li>📋 Otimizações</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Q4 2024</h3>
+                        <ul style="list-style: none; text-align: left;">
+                            <li>📋 Lançamento oficial</li>
+                            <li>📋 Expansão vendas</li>
+                            <li>📋 Parcerias</li>
+                            <li>📋 Versão 2.0</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <p style="font-size: 0.9em; opacity: 0.8;">✅ Concluído | 🔄 Em andamento | 📋 Planejado</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Conclusão -->
+        <div class="slide slide-conclusion">
+            <div class="slide-content">
+                <h2>🎯 Conclusão</h2>
+                
+                <div class="bullet-points" style="margin: 40px 0;">
+                    <ul style="list-style: none;">
+                        <li><strong>Oportunidade de Mercado:</strong> 4,2 milhões de consumidores potenciais em segmento em crescimento de 15% ao ano</li>
+                        <li><strong>Diferencial Tecnológico:</strong> Produto inovador com IA, sustentabilidade e design modular único no mercado</li>
+                        <li><strong>Viabilidade Financeira:</strong> ROI de 132% no primeiro ano com payback em 9,1 meses</li>
+                        <li><strong>Impacto Social:</strong> Promove educação ambiental e alimentação saudável em centros urbanos</li>
+                        <li><strong>Escalabilidade:</strong> Modelo de negócio recorrente com múltiplas fontes de receita</li>
+                    </ul>
+                </div>
+                
+                <div class="feature-card" style="margin-top: 40px;">
+                    <h3>🚀 Próximos Passos</h3>
+                    <p style="font-size: 1.2em;">Captação de investimento de <span class="highlight">R$ 500.000</span> para finalizar desenvolvimento e iniciar produção em escala</p>
+                </div>
+                
+                <p style="font-size: 1.4em; margin-top: 40px; font-weight: 600;">EcoSmart Garden: O futuro da jardinagem urbana sustentável</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Contato -->
+        <div class="slide slide-title">
+            <div class="slide-content">
+                <div class="logo">🌱</div>
+                <h2>Obrigado!</h2>
+                <h3>Dúvidas e Contato</h3>
+                
+                <div style="margin: 40px 0; font-size: 1.2em;">
+                    <p>📧 contato@ecosmartgarden.com.br</p>
+                    <p>📱 (11) 99999-9999</p>
+                    <p>🌐 www.ecosmartgarden.com.br</p>
+                    <p>📍 São Paulo, SP</p>
+                </div>
+                
+                <p style="opacity: 0.8;">Vamos juntos revolucionar a agricultura urbana!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Anterior</button>
+        <button class="nav-btn" onclick="nextSlide()">Próximo →</button>
+    </div>
+
+    <!-- Slide Counter -->
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">9</span>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            document.getElementById('currentSlide').textContent = index + 1;
+        }
+
+        function nextSlide() {
+            currentSlideIndex = (currentSlideIndex + 1) % totalSlides;
+            showSlide(currentSlideIndex);
+        }
+
+        function previousSlide() {
+            currentSlideIndex = (currentSlideIndex - 1 + totalSlides) % totalSlides;
+            showSlide(currentSlideIndex);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Auto-advance (opcional)
+        // setInterval(nextSlide, 10000); // Avança automaticamente a cada 10 segundos
+    </script>
+</body>
+</html>
